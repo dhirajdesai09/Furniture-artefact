@@ -1,0 +1,2730 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>FurniMall</title>
+    <script src="./vendor/react.js"></script>
+    <script src="./vendor/react-dom.js"></script>
+    <script src="./support.js"></script>
+    <script src="./assets/b3d73a44e1c9d9d74c1533f84f62c492.js"></script>
+  </head>
+  <body>
+    <x-dc>
+      <helmet>
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&amp;family=Jost:wght@400;500;600;700&amp;display=swap"
+        />
+        <style>
+          html {
+            scroll-behavior: smooth;
+          }
+          body {
+            margin: 0;
+            overscroll-behavior: none;
+            background: #f7f3ec;
+            color: #1c1917;
+            font-family: "Jost", system-ui, sans-serif;
+            font-size: 18px;
+            -webkit-font-smoothing: antialiased;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-user-select: none;
+            user-select: none;
+          }
+          input,
+          textarea {
+            -webkit-user-select: text;
+            user-select: text;
+          }
+          button {
+            font: inherit;
+            cursor: pointer;
+            color: inherit;
+            touch-action: manipulation;
+            transition:
+              transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+              background-color 0.3s,
+              box-shadow 0.3s,
+              border-color 0.3s,
+              color 0.3s;
+          }
+          button:active {
+            transform: scale(0.97);
+          }
+          .card {
+            background: #fff;
+            border: 1px solid #efe8da;
+            border-radius: 26px;
+            box-shadow:
+              0 1px 2px rgba(28, 25, 23, 0.04),
+              0 12px 34px rgba(28, 25, 23, 0.06);
+            transition:
+              transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.45s;
+          }
+          .lift:hover {
+            transform: translateY(-6px);
+            box-shadow:
+              0 2px 4px rgba(28, 25, 23, 0.05),
+              0 24px 50px rgba(28, 25, 23, 0.13);
+          }
+          .btn {
+            border: 0;
+            border-radius: 16px;
+            padding: 0 28px;
+            min-height: 64px;
+            font-size: 19px;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            background: #16332c;
+            color: #f7f1e3;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+          }
+          .btn:hover {
+            background: #1f453b;
+            transform: translateY(-2px);
+            box-shadow: 0 14px 28px rgba(22, 51, 44, 0.28);
+          }
+          .btn.out {
+            background: #fff;
+            color: #1c1917;
+            box-shadow: inset 0 0 0 1.5px #d9d0bf;
+          }
+          .btn.out:hover {
+            background: #fbf8f2;
+            box-shadow:
+              inset 0 0 0 1.5px #b08d57,
+              0 10px 22px rgba(28, 25, 23, 0.08);
+          }
+          .ic {
+            border: 0;
+            background: none;
+            width: 52px;
+            height: 52px;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            position: relative;
+            padding: 0;
+          }
+          .ic:hover {
+            background: #efe8da;
+          }
+          .rb {
+            border: 0;
+            background: rgba(255, 255, 255, 0.94);
+            backdrop-filter: blur(10px);
+            border-radius: 50%;
+            width: 52px;
+            height: 52px;
+            display: grid;
+            place-items: center;
+            box-shadow: 0 4px 18px rgba(28, 25, 23, 0.14);
+            padding: 0;
+          }
+          .rb:hover {
+            transform: translateY(-2px) scale(1.04);
+            box-shadow: 0 10px 26px rgba(28, 25, 23, 0.2);
+          }
+          .sw {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            border: 3px solid #fff;
+            box-shadow: 0 0 0 1.5px #d9d0bf;
+            padding: 0;
+            overflow: hidden;
+            display: grid;
+            place-items: center;
+          }
+          .sw:hover {
+            transform: scale(1.08);
+          }
+          .sw.on {
+            box-shadow: 0 0 0 4px #b08d57;
+            transform: scale(1.05);
+          }
+          .pill {
+            border: 1.5px solid #d9d0bf;
+            background: #fff;
+            border-radius: 16px;
+            min-height: 62px;
+            padding: 10px 22px;
+            font-size: 18px;
+            font-weight: 500;
+          }
+          .pill:hover {
+            border-color: #b08d57;
+          }
+          .pill.on {
+            border-color: #8f6f33;
+            background: #f6efde;
+            color: #6b531f;
+            font-weight: 600;
+          }
+          .fld {
+            width: 100%;
+            box-sizing: border-box;
+            border: 1.5px solid #d9d0bf;
+            border-radius: 14px;
+            padding: 17px 18px;
+            font: inherit;
+            font-size: 19px;
+            background: #fff;
+            color: #1c1917;
+            transition:
+              border-color 0.25s,
+              box-shadow 0.25s;
+            outline: 0;
+          }
+          .fld:focus {
+            border-color: #8f6f33;
+            box-shadow: 0 0 0 4px rgba(143, 111, 51, 0.18);
+          }
+          .dot {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.12);
+            display: inline-block;
+          }
+          h1,
+          h2,
+          h3 {
+            margin: 0;
+            font-family: "Cormorant Garamond", serif;
+            font-weight: 700;
+            letter-spacing: 0;
+          }
+          @keyframes rise {
+            from {
+              opacity: 0;
+              transform: translateY(20px);
+            }
+            to {
+              opacity: 1;
+              transform: none;
+            }
+          }
+          @keyframes fade {
+            from {
+              opacity: 0;
+            }
+            to {
+              opacity: 1;
+            }
+          }
+          @keyframes fA {
+            from {
+              opacity: 0;
+              transform: scale(1.04);
+            }
+            to {
+              opacity: 1;
+              transform: none;
+            }
+          }
+          @keyframes fB {
+            from {
+              opacity: 0;
+              transform: scale(1.04);
+            }
+            to {
+              opacity: 1;
+              transform: none;
+            }
+          }
+          @keyframes slideIn {
+            from {
+              opacity: 0;
+              transform: translateX(40px);
+            }
+            to {
+              opacity: 1;
+              transform: none;
+            }
+          }
+          @keyframes toastIn {
+            from {
+              opacity: 0;
+              transform: translate(-50%, 14px);
+            }
+            to {
+              opacity: 1;
+              transform: translate(-50%, 0);
+            }
+          }
+          @keyframes popIn {
+            from {
+              opacity: 0;
+              transform: translateY(16px) scale(0.92);
+            }
+            to {
+              opacity: 1;
+              transform: none;
+            }
+          }
+          .rise {
+            animation: rise 0.8s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+          }
+          .fade {
+            animation: fade 0.6s ease backwards;
+          }
+          .fadeA {
+            animation: fA 0.9s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+          }
+          .fadeB {
+            animation: fB 0.9s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+          }
+          .slidein {
+            animation: slideIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.1s
+              backwards;
+          }
+          .toast {
+            animation: toastIn 0.45s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+          }
+          .pop {
+            animation: popIn 0.55s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+          }
+          .stag > * {
+            animation: rise 0.75s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+          }
+          .stag > *:nth-child(1) {
+            animation-delay: 0.05s;
+          }
+          .stag > *:nth-child(2) {
+            animation-delay: 0.11s;
+          }
+          .stag > *:nth-child(3) {
+            animation-delay: 0.17s;
+          }
+          .stag > *:nth-child(4) {
+            animation-delay: 0.23s;
+          }
+          .stag > *:nth-child(5) {
+            animation-delay: 0.29s;
+          }
+          .stag > *:nth-child(6) {
+            animation-delay: 0.35s;
+          }
+          .stag > *:nth-child(n + 7) {
+            animation-delay: 0.4s;
+          }
+          @media (prefers-reduced-motion: reduce) {
+            * {
+              animation: none !important;
+              transition: none !important;
+            }
+          }
+          @media print {
+            .no-print {
+              display: none !important;
+            }
+            body {
+              background: #fff;
+            }
+          }
+        </style>
+      </helmet>
+
+      <div
+        style="display:{{wrapDisp}};max-width:2000px;margin:0 auto;padding:12px 18px 40px;box-sizing:border-box"
+      >
+        <sc-if value="{{vHome}}" hint-placeholder-val="{{true}}">
+          <section
+            class="rise"
+            style="
+              display: flex;
+              flex-wrap: wrap;
+              align-items: center;
+              border-radius: 32px;
+              background:
+                radial-gradient(
+                  circle at 88% 12%,
+                  rgba(176, 141, 87, 0.38) 0%,
+                  transparent 42%
+                ),
+                linear-gradient(135deg, #0f2b26, #16332c 55%, #0b1f1b);
+              padding: 18px 28px;
+              gap: 18px;
+              overflow: hidden;
+            "
+          >
+            <div
+              style="
+                flex: 1 1 340px;
+                display: flex;
+                flex-direction: column;
+                gap: 16px;
+                padding: 8px 0;
+              "
+            >
+              <h1
+                style="
+                  font-family: &quot;Cormorant Garamond&quot;, serif;
+                  font-size: 88px;
+                  line-height: 0.95;
+                  color: #f7f1e3;
+                  letter-spacing: 0.01em;
+                  font-weight: 700;
+                "
+              >
+                FurniMall
+              </h1>
+              <p
+                style="
+                  margin: 0;
+                  font-size: 22px;
+                  color: #e2d3ae;
+                  letter-spacing: 0.02em;
+                "
+              >
+                Design it. See it in 3D. Order it.
+              </p>
+              <label
+                style="
+                  display: flex;
+                  align-items: center;
+                  gap: 12px;
+                  background: #fff;
+                  border-radius: 99px;
+                  padding: 0 22px;
+                  height: 72px;
+                  box-shadow: 0 8px 26px rgba(0, 0, 0, 0.25);
+                  max-width: 620px;
+                "
+                ><svg
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#1c1917"
+                  stroke-width="2"
+                  aria-hidden="true"
+                >
+                  <circle cx="11" cy="11" r="7"></circle>
+                  <path d="M20 20l-4-4"></path></svg
+                ><input
+                  value="{{q}}"
+                  onInput="{{onSearch}}"
+                  placeholder="Search furniture…"
+                  aria-label="Search furniture"
+                  style="
+                    border: 0;
+                    outline: 0;
+                    flex: 1;
+                    font: inherit;
+                    font-size: 21px;
+                    background: none;
+                    height: 64px;
+                  "
+              /></label>
+            </div>
+            <div
+              style="
+                flex: 1 1 340px;
+                min-width: 0;
+                position: relative;
+                border-radius: 30px;
+                overflow: hidden;
+                box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4);
+              "
+            >
+              <div class="{{hcls}}">
+                <dc-import
+                  name="Viewer"
+                  kind="{{hero.f.kind}}"
+                  c1="{{hero.f.c1}}"
+                  c2="{{hero.f.c2}}"
+                  s="{{hero.f.s}}"
+                  n="{{hero.f.n}}"
+                  x="{{hero.f.x}}"
+                  ls="{{hero.f.ls}}"
+                  m="{{hero.f.m}}"
+                  fb="{{hero.f.fb}}"
+                  lm="{{hero.f.lm}}"
+                  shape="{{hero.f.shape}}"
+                  st="{{hero.f.st}}"
+                  az=".55"
+                  h="380"
+                  hint-size="100%,380px"
+                ></dc-import>
+              </div>
+              <div
+                style="
+                  position: absolute;
+                  left: 20px;
+                  top: 18px;
+                  font-size: 13px;
+                  font-weight: 600;
+                  letter-spacing: 0.18em;
+                  color: #6b531f;
+                "
+              >
+                FEATURED
+              </div>
+              <button
+                onClick="{{heroOpen}}"
+                style="
+                  position: absolute;
+                  left: 18px;
+                  bottom: 18px;
+                  border: 0;
+                  border-radius: 99px;
+                  height: 64px;
+                  padding: 0 26px;
+                  background: rgba(255, 255, 255, 0.88);
+                  backdrop-filter: blur(12px);
+                  display: flex;
+                  align-items: center;
+                  gap: 16px;
+                  box-shadow: 0 8px 24px rgba(28, 25, 23, 0.15);
+                "
+              >
+                <span
+                  style="
+                    font-family: &quot;Cormorant Garamond&quot;, serif;
+                    font-size: 28px;
+                    font-weight: 700;
+                  "
+                  >{{hero.name}}</span
+                ><span style="font-size: 17px; color: #57534e"
+                  >{{hero.price}}</span
+                ><svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#1c1917"
+                  stroke-width="2.2"
+                  aria-hidden="true"
+                >
+                  <path d="M5 12h14M13 6l6 6-6 6"></path>
+                </svg>
+              </button>
+              <div
+                style="
+                  position: absolute;
+                  right: 14px;
+                  bottom: 18px;
+                  display: flex;
+                  align-items: center;
+                "
+              >
+                <sc-for list="{{heroDots}}" as="d" hint-placeholder-count="6"
+                  ><button
+                    onClick="{{d.pick}}"
+                    aria-label="Show this piece"
+                    style="
+                      border: 0;
+                      background: none;
+                      width: 34px;
+                      height: 48px;
+                      display: grid;
+                      place-items: center;
+                      padding: 0;
+                    "
+                  >
+                    <span
+                      style="display:block;width:{{d.w}};height:10px;border-radius:99px;background:{{d.bg}};transition:width .4s,background-color .4s"
+                    ></span></button
+                ></sc-for>
+              </div>
+            </div>
+          </section>
+          <div
+            class="rise stag"
+            style="
+              display: grid;
+              grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+              gap: 12px;
+              margin-top: 12px;
+            "
+          >
+            <sc-for list="{{cats}}" as="c" hint-placeholder-count="5"
+              ><button
+                class="card lift"
+                onClick="{{c.pick}}"
+                style="border:0;padding:12px 8px 18px;display:flex;flex-direction:column;align-items:center;gap:6px;font-weight:600;font-size:21px;background:{{c.bg}}"
+              >
+                <div style="width: 100%; border-radius: 14px; overflow: hidden">
+                  <dc-import
+                    name="Viewer"
+                    kind="{{c.f.kind}}"
+                    c1="{{c.f.c1}}"
+                    c2="{{c.f.c2}}"
+                    s="{{c.f.s}}"
+                    n="{{c.f.n}}"
+                    x="{{c.f.x}}"
+                    ls="{{c.f.ls}}"
+                    m="{{c.f.m}}"
+                    fb="{{c.f.fb}}"
+                    lm="{{c.f.lm}}"
+                    shape="{{c.f.shape}}"
+                    st="{{c.f.st}}"
+                    h="120"
+                    hint-size="100%,120px"
+                  ></dc-import>
+                </div>
+                {{c.name}}
+              </button></sc-for
+            >
+          </div>
+        </sc-if>
+
+        <sc-if value="{{vCatHead}}" hint-placeholder-val="{{false}}">
+          <div
+            style="
+              display: flex;
+              align-items: center;
+              gap: 8px;
+              margin-bottom: 14px;
+            "
+          >
+            <button class="ic" onClick="{{goHome}}" aria-label="Back">
+              <svg
+                width="22"
+                height="22"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#1c1917"
+                stroke-width="2"
+                aria-hidden="true"
+              >
+                <path d="M19 12H5M11 6l-6 6 6 6"></path>
+              </svg>
+            </button>
+            <h2 style="font-size: 40px; flex: 1">{{gridTitle}}</h2>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{vList}}" hint-placeholder-val="{{true}}">
+          <sc-if value="{{vHome}}" hint-placeholder-val="{{true}}"
+            ><h2 style="font-size: 40px; margin: 18px 0 10px">
+              {{gridTitle}}
+            </h2></sc-if
+          >
+          <sc-if value="{{noResults}}" hint-placeholder-val="{{false}}"
+            ><p style="color: #78716c">
+              Nothing matched. Try “sofa” or “table”.
+            </p></sc-if
+          >
+          <div
+            class="stag"
+            style="
+              display: grid;
+              grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+              gap: 14px;
+            "
+          >
+            <sc-for list="{{grid}}" as="p" hint-placeholder-count="6">
+              <div
+                class="card lift"
+                style="padding:10px;display:flex;flex-direction:column;gap:8px;position:relative;outline:{{p.ring}}"
+              >
+                <button
+                  onClick="{{p.open}}"
+                  style="
+                    border: 0;
+                    background: #f0eadf;
+                    border-radius: 16px;
+                    padding: 0;
+                    overflow: hidden;
+                    text-align: left;
+                  "
+                >
+                  <dc-import
+                    name="Viewer"
+                    kind="{{p.f.kind}}"
+                    c1="{{p.f.c1}}"
+                    c2="{{p.f.c2}}"
+                    s="{{p.f.s}}"
+                    n="{{p.f.n}}"
+                    x="{{p.f.x}}"
+                    ls="{{p.f.ls}}"
+                    m="{{p.f.m}}"
+                    fb="{{p.f.fb}}"
+                    lm="{{p.f.lm}}"
+                    shape="{{p.f.shape}}"
+                    st="{{p.f.st}}"
+                    h="230"
+                    hint-size="100%,230px"
+                  ></dc-import>
+                </button>
+                <button
+                  class="ic"
+                  onClick="{{p.fav}}"
+                  aria-label="Favorite"
+                  style="
+                    position: absolute;
+                    top: 14px;
+                    right: 14px;
+                    width: 46px;
+                    height: 46px;
+                  "
+                >
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="{{p.heart}}"
+                    stroke="{{p.heartLine}}"
+                    stroke-width="2"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M12 21s-8-5.2-8-11a4.5 4.5 0 018-2.8A4.5 4.5 0 0120 10c0 5.8-8 11-8 11z"
+                    ></path>
+                  </svg>
+                </button>
+                <sc-if value="{{p.dots}}" hint-placeholder-val="{{false}}"
+                  ><div style="display: flex; gap: 6px; padding: 2px 6px 6px">
+                    <sc-for
+                      list="{{p.dotList}}"
+                      as="d"
+                      hint-placeholder-count="3"
+                      ><span class="dot" style="background:{{d}}"></span
+                    ></sc-for></div
+                ></sc-if>
+                <sc-if value="{{p.info}}" hint-placeholder-val="{{true}}"
+                  ><div style="padding: 0 6px 6px">
+                    <div style="font-weight: 700">{{p.name}}</div>
+                    <div style="color: #44403c; margin-top: 2px">
+                      {{p.from}}
+                    </div>
+                  </div></sc-if
+                >
+              </div>
+            </sc-for>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{vPos}}" hint-placeholder-val="{{false}}">
+          <div
+            style="
+              display: flex;
+              align-items: center;
+              gap: 8px;
+              margin-bottom: 12px;
+            "
+          >
+            <button class="ic" onClick="{{goCart}}" aria-label="Back to cart">
+              <svg
+                width="22"
+                height="22"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#1c1917"
+                stroke-width="2"
+                aria-hidden="true"
+              >
+                <path d="M19 12H5M11 6l-6 6 6 6"></path>
+              </svg>
+            </button>
+            <h2 style="font-size: 40px">Point of sale</h2>
+          </div>
+          <sc-if value="{{cartEmpty}}" hint-placeholder-val="{{false}}"
+            ><div class="card" style="padding: 40px; text-align: center">
+              <p style="margin: 0 0 18px; font-size: 18px">
+                Nothing to bill yet. Add a product first.
+              </p>
+              <button class="btn" onClick="{{goHome}}">Start shopping</button>
+            </div></sc-if
+          >
+          <sc-if value="{{hasCart}}" hint-placeholder-val="{{true}}">
+            <div
+              class="rise"
+              style="
+                display: flex;
+                flex-wrap: wrap;
+                gap: 20px;
+                align-items: flex-start;
+              "
+            >
+              <div
+                class="card"
+                style="
+                  flex: 1 1 320px;
+                  padding: 22px;
+                  display: flex;
+                  flex-direction: column;
+                  gap: 14px;
+                "
+              >
+                <h3 style="font-size: 18px">Customer details</h3>
+                <label
+                  style="
+                    display: flex;
+                    flex-direction: column;
+                    gap: 6px;
+                    font-weight: 600;
+                    font-size: 14px;
+                  "
+                  >Customer name<input
+                    class="fld"
+                    value="{{cust.name}}"
+                    onInput="{{setName}}"
+                    autocomplete="off"
+                /></label>
+                <label
+                  style="
+                    display: flex;
+                    flex-direction: column;
+                    gap: 6px;
+                    font-weight: 600;
+                    font-size: 14px;
+                  "
+                  >Contact number<input
+                    class="fld"
+                    type="tel"
+                    value="{{cust.phone}}"
+                    onInput="{{setPhone}}"
+                    autocomplete="off"
+                /></label>
+                <label
+                  style="
+                    display: flex;
+                    flex-direction: column;
+                    gap: 6px;
+                    font-weight: 600;
+                    font-size: 14px;
+                  "
+                  >Delivery address<textarea
+                    class="fld"
+                    rows="4"
+                    value="{{cust.addr}}"
+                    onInput="{{setAddr}}"
+                    style="resize: vertical"
+                  ></textarea>
+                </label>
+                <sc-if value="{{err}}" hint-placeholder-val="{{false}}"
+                  ><div
+                    role="alert"
+                    style="color: #b42318; font-weight: 600; font-size: 14px"
+                  >
+                    {{err}}
+                  </div></sc-if
+                >
+                <div style="display: flex; gap: 10px; flex-wrap: wrap">
+                  <button class="btn out" onClick="{{genQuote}}">
+                    Generate quotation</button
+                  ><button class="btn" onClick="{{genBill}}">
+                    Generate bill
+                  </button>
+                </div>
+              </div>
+              <div
+                class="card"
+                style="
+                  flex: 2 1 440px;
+                  padding: 22px;
+                  display: flex;
+                  flex-direction: column;
+                  gap: 14px;
+                "
+              >
+                <h3 style="font-size: 18px">Order summary</h3>
+                <sc-for list="{{lines}}" as="i" hint-placeholder-count="2">
+                  <div
+                    style="
+                      border-bottom: 1px solid #e7e0d3;
+                      padding-bottom: 12px;
+                    "
+                  >
+                    <div
+                      style="
+                        display: flex;
+                        justify-content: space-between;
+                        gap: 12px;
+                        font-weight: 700;
+                      "
+                    >
+                      <span>{{i.name}} × {{i.qty}}</span><span>{{i.amt}}</span>
+                    </div>
+                    <div
+                      style="
+                        display: grid;
+                        grid-template-columns: auto 1fr;
+                        gap: 2px 14px;
+                        margin-top: 8px;
+                        font-size: 14px;
+                        color: #44403c;
+                      "
+                    >
+                      <sc-for list="{{i.det}}" as="d" hint-placeholder-count="4"
+                        ><span style="color: #78716c">{{d.k}}</span
+                        ><span>{{d.v}}</span></sc-for
+                      >
+                    </div>
+                    <div
+                      style="margin-top: 6px; font-size: 13px; color: #78716c"
+                    >
+                      {{i.rate}} each
+                    </div>
+                  </div></sc-for
+                >
+                <div style="display: flex; justify-content: space-between">
+                  <span>Subtotal</span><span>{{sub}}</span>
+                </div>
+                <div style="display: flex; justify-content: space-between">
+                  <span>GST (18%)</span><span>{{gst}}</span>
+                </div>
+                <div style="display: flex; justify-content: space-between">
+                  <span>Delivery</span><span>Free</span>
+                </div>
+                <div
+                  style="
+                    display: flex;
+                    justify-content: space-between;
+                    border-top: 1px solid #e7e0d3;
+                    padding-top: 12px;
+                    font-size: 22px;
+                  "
+                >
+                  <strong>Total</strong><strong>{{grand}}</strong>
+                </div>
+              </div>
+            </div></sc-if
+          >
+        </sc-if>
+
+        <sc-if value="{{vDoc}}" hint-placeholder-val="{{false}}">
+          <div
+            class="no-print"
+            style="
+              display: flex;
+              gap: 10px;
+              flex-wrap: wrap;
+              margin-bottom: 14px;
+              max-width: 820px;
+              margin-left: auto;
+              margin-right: auto;
+            "
+          >
+            <button class="btn out" onClick="{{backPos}}">← Edit details</button
+            ><button class="btn" onClick="{{printDoc}}">
+              Print / Save as PDF</button
+            ><button class="btn out" onClick="{{newSale}}">New sale</button>
+          </div>
+          <div
+            class="card rise"
+            style="
+              max-width: 820px;
+              margin: 0 auto;
+              padding: 36px;
+              box-sizing: border-box;
+            "
+          >
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;
+                flex-wrap: wrap;
+                gap: 16px;
+                border-bottom: 2px solid #1c1917;
+                padding-bottom: 16px;
+              "
+            >
+              <div>
+                <div style="font-size: 26px; font-weight: 800">FurniMall</div>
+                <div style="color: #78716c; font-size: 13px">
+                  Furniture studio
+                </div>
+              </div>
+              <div style="text-align: right">
+                <div
+                  style="
+                    font-size: 22px;
+                    font-weight: 800;
+                    letter-spacing: 0.06em;
+                  "
+                >
+                  {{docTitle}}
+                </div>
+                <div style="font-size: 14px; margin-top: 4px">
+                  No. {{docNo}}
+                </div>
+                <div style="font-size: 14px">Date: {{docDate}}</div>
+              </div>
+            </div>
+            <div style="margin: 18px 0">
+              <div
+                style="
+                  color: #78716c;
+                  font-size: 12px;
+                  font-weight: 700;
+                  letter-spacing: 0.08em;
+                "
+              >
+                {{billToLabel}}
+              </div>
+              <div style="font-weight: 700; margin-top: 4px">{{cust.name}}</div>
+              <div style="font-size: 14px">{{cust.phone}}</div>
+              <div style="font-size: 14px; white-space: pre-line">
+                {{cust.addr}}
+              </div>
+            </div>
+            <div style="overflow-x: auto">
+              <table
+                style="width: 100%; border-collapse: collapse; font-size: 14px"
+              >
+                <thead>
+                  <tr
+                    style="text-align: left; border-bottom: 1.5px solid #d9d0bf"
+                  >
+                    <th style="padding: 8px 6px">Item and customization</th>
+                    <th style="padding: 8px 6px">Qty</th>
+                    <th style="padding: 8px 6px; text-align: right">Rate</th>
+                    <th style="padding: 8px 6px; text-align: right">Amount</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <sc-for list="{{lines}}" as="i" hint-placeholder-count="2"
+                    ><tr
+                      style="
+                        border-bottom: 1px solid #e7e0d3;
+                        vertical-align: top;
+                      "
+                    >
+                      <td style="padding: 10px 6px">
+                        <div style="font-weight: 700">{{i.name}}</div>
+                        <div
+                          style="
+                            display: grid;
+                            grid-template-columns: auto 1fr;
+                            gap: 1px 12px;
+                            margin-top: 6px;
+                            font-size: 13px;
+                            color: #44403c;
+                          "
+                        >
+                          <sc-for
+                            list="{{i.det}}"
+                            as="d"
+                            hint-placeholder-count="4"
+                            ><span style="color: #78716c">{{d.k}}</span
+                            ><span>{{d.v}}</span></sc-for
+                          >
+                        </div>
+                      </td>
+                      <td style="padding: 10px 6px">{{i.qty}}</td>
+                      <td style="padding: 10px 6px; text-align: right">
+                        {{i.rate}}
+                      </td>
+                      <td
+                        style="
+                          padding: 10px 6px;
+                          text-align: right;
+                          font-weight: 700;
+                        "
+                      >
+                        {{i.amt}}
+                      </td>
+                    </tr></sc-for
+                  >
+                </tbody>
+              </table>
+            </div>
+            <div
+              style="
+                margin-left: auto;
+                max-width: 300px;
+                margin-top: 16px;
+                display: flex;
+                flex-direction: column;
+                gap: 6px;
+                font-size: 14px;
+              "
+            >
+              <div style="display: flex; justify-content: space-between">
+                <span>Subtotal</span><span>{{sub}}</span>
+              </div>
+              <div style="display: flex; justify-content: space-between">
+                <span>GST (18%)</span><span>{{gst}}</span>
+              </div>
+              <div style="display: flex; justify-content: space-between">
+                <span>Delivery</span><span>Free</span>
+              </div>
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  border-top: 1.5px solid #1c1917;
+                  padding-top: 8px;
+                  font-size: 20px;
+                "
+              >
+                <strong>Total</strong><strong>{{grand}}</strong>
+              </div>
+            </div>
+            <p style="margin: 24px 0 0; font-size: 12px; color: #78716c">
+              {{docNote}}
+            </p>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{vCart}}" hint-placeholder-val="{{false}}">
+          <div class="rise" style="max-width: 720px; margin: 0 auto">
+            <div
+              style="
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                margin-bottom: 10px;
+              "
+            >
+              <button class="ic" onClick="{{goHome}}" aria-label="Back">
+                <svg
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#1c1917"
+                  stroke-width="2"
+                  aria-hidden="true"
+                >
+                  <path d="M19 12H5M11 6l-6 6 6 6"></path>
+                </svg>
+              </button>
+              <h2 style="font-size: 40px">Your Cart</h2>
+            </div>
+            <sc-if value="{{cartEmpty}}" hint-placeholder-val="{{false}}"
+              ><div class="card" style="padding: 40px; text-align: center">
+                <p style="margin: 0 0 18px; font-size: 18px">
+                  Your cart is empty.
+                </p>
+                <button class="btn" onClick="{{goHome}}">Start shopping</button>
+              </div></sc-if
+            >
+            <sc-if value="{{hasCart}}" hint-placeholder-val="{{true}}">
+              <div class="card" style="padding: 6px 18px">
+                <sc-for list="{{lines}}" as="i" hint-placeholder-count="2">
+                  <div
+                    style="
+                      display: flex;
+                      align-items: center;
+                      gap: 14px;
+                      padding: 14px 0;
+                      border-bottom: 1px solid #e7e0d3;
+                    "
+                  >
+                    <button
+                      onClick="{{i.editItem}}"
+                      aria-label="Edit this design"
+                      title="Edit this design"
+                      style="
+                        width: 120px;
+                        flex: none;
+                        border: 0;
+                        padding: 0;
+                        background: #f0eadf;
+                        border-radius: 12px;
+                        overflow: hidden;
+                      "
+                    >
+                      <dc-import
+                        name="Viewer"
+                        kind="{{i.f.kind}}"
+                        c1="{{i.f.c1}}"
+                        c2="{{i.f.c2}}"
+                        s="{{i.f.s}}"
+                        n="{{i.f.n}}"
+                        x="{{i.f.x}}"
+                        ls="{{i.f.ls}}"
+                        m="{{i.f.m}}"
+                        fb="{{i.f.fb}}"
+                        lm="{{i.f.lm}}"
+                        shape="{{i.f.shape}}"
+                        st="{{i.f.st}}"
+                        h="84"
+                        hint-size="120px,84px"
+                      ></dc-import>
+                      <div
+                        style="
+                          font-size: 11px;
+                          font-weight: 700;
+                          color: #8f6f33;
+                          padding: 4px 0 6px;
+                        "
+                      >
+                        Edit design
+                      </div>
+                    </button>
+                    <div style="flex: 1; min-width: 0">
+                      <div style="font-weight: 700">{{i.name}}</div>
+                      <div style="display: flex; gap: 6px; margin-top: 8px">
+                        <sc-for
+                          list="{{i.dots}}"
+                          as="d"
+                          hint-placeholder-count="3"
+                          ><span class="dot" style="background:{{d}}"></span
+                        ></sc-for>
+                      </div>
+                      <div
+                        style="color: #78716c; font-size: 12px; margin-top: 6px"
+                      >
+                        {{i.summary}}
+                      </div>
+                    </div>
+                    <div
+                      style="
+                        display: flex;
+                        flex-direction: column;
+                        align-items: flex-end;
+                        gap: 10px;
+                      "
+                    >
+                      <div
+                        style="display: flex; align-items: center; gap: 10px"
+                      >
+                        <strong>{{i.unitTxt}}</strong
+                        ><button
+                          class="ic"
+                          onClick="{{i.remove}}"
+                          aria-label="Remove"
+                          style="width: 46px; height: 46px"
+                        >
+                          <svg
+                            width="18"
+                            height="18"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="#78716c"
+                            stroke-width="2"
+                            aria-hidden="true"
+                          >
+                            <path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"></path>
+                          </svg>
+                        </button>
+                      </div>
+                      <div
+                        style="
+                          display: flex;
+                          align-items: center;
+                          border: 1.5px solid #d9d0bf;
+                          border-radius: 10px;
+                        "
+                      >
+                        <button
+                          class="ic"
+                          onClick="{{i.minus}}"
+                          aria-label="Fewer"
+                          style="width: 52px; height: 46px; border-radius: 12px"
+                        >
+                          −</button
+                        ><span
+                          style="
+                            min-width: 26px;
+                            text-align: center;
+                            font-weight: 700;
+                          "
+                          >{{i.qty}}</span
+                        ><button
+                          class="ic"
+                          onClick="{{i.plus}}"
+                          aria-label="More"
+                          style="width: 52px; height: 46px; border-radius: 12px"
+                        >
+                          +
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </sc-for>
+              </div>
+              <div
+                class="card"
+                style="
+                  margin-top: 14px;
+                  padding: 18px 20px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: space-between;
+                  flex-wrap: wrap;
+                  gap: 12px;
+                "
+              >
+                <div>
+                  <div style="color: #78716c; font-size: 13px">Total</div>
+                  <strong style="font-size: 28px">{{cartTotal}}</strong>
+                </div>
+                <button
+                  class="btn"
+                  style="min-width: 240px; justify-content: space-between"
+                  onClick="{{checkout}}"
+                >
+                  Proceed to POS<svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    aria-hidden="true"
+                  >
+                    <path d="M5 12h14M13 6l6 6-6 6"></path>
+                  </svg>
+                </button>
+              </div>
+            </sc-if>
+          </div>
+        </sc-if>
+      </div>
+      <sc-if value="{{vProd}}" hint-placeholder-val="{{false}}">
+        <div
+          class="fade"
+          style="
+            position: fixed;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 5;
+            display: flex;
+            flex-wrap: nowrap;
+            background: #fff;
+            overflow: hidden;
+          "
+        >
+          <div
+            id="stage"
+            style="
+              flex: 1 1 0;
+              min-width: 0;
+              position: relative;
+              overflow: hidden;
+              background: radial-gradient(
+                ellipse at 50% 42%,
+                #fdfbf7 0%,
+                #f2ede3 55%,
+                #ded6c7 100%
+              );
+            "
+          >
+            <dc-import
+              name="Viewer"
+              kind="{{cur.f.kind}}"
+              c1="{{cur.f.c1}}"
+              c2="{{cur.f.c2}}"
+              s="{{cur.f.s}}"
+              n="{{cur.f.n}}"
+              x="{{cur.f.x}}"
+              ls="{{cur.f.ls}}"
+              m="{{cur.f.m}}"
+              fb="{{cur.f.fb}}"
+              lm="{{cur.f.lm}}"
+              shape="{{cur.f.shape}}"
+              st="{{cur.f.st}}"
+              live="1"
+              dim="{{dims}}"
+              spin="{{spin}}"
+              zoom="{{zoom}}"
+              az="{{az}}"
+              h="100vh"
+              hint-size="100%,820px"
+            ></dc-import>
+            <button
+              class="rb"
+              onClick="{{backList}}"
+              aria-label="Back"
+              style="
+                position: absolute;
+                left: 28px;
+                top: 28px;
+                z-index: 3;
+                width: 64px;
+                height: 64px;
+              "
+            >
+              <svg
+                width="22"
+                height="22"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#1c1917"
+                stroke-width="2.2"
+                aria-hidden="true"
+              >
+                <path d="M19 12H5M11 6l-6 6 6 6"></path>
+              </svg>
+            </button>
+            <div
+              style="
+                position: absolute;
+                left: 44px;
+                top: 110px;
+                z-index: 2;
+                pointer-events: none;
+              "
+            >
+              <div
+                style="
+                  font-family: &quot;Cormorant Garamond&quot;, serif;
+                  font-size: 64px;
+                  font-weight: 700;
+                  line-height: 1;
+                "
+              >
+                {{cur.name}}
+              </div>
+              <div style="font-size: 18px; color: #5b5750; margin-top: 6px">
+                {{cur.tag}}
+              </div>
+            </div>
+            <div
+              style="
+                position: absolute;
+                right: 28px;
+                top: 28px;
+                z-index: 3;
+                display: flex;
+                gap: 10px;
+              "
+            >
+              <button
+                class="rb"
+                onClick="{{togglePlay}}"
+                aria-label="Pause or play rotation"
+                style="width: 64px; height: 64px"
+              >
+                <sc-if value="{{spin}}" hint-placeholder-val="{{true}}"
+                  ><svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="#1c1917"
+                    aria-hidden="true"
+                  >
+                    <rect x="6" y="5" width="4" height="14" rx="1"></rect>
+                    <rect
+                      x="14"
+                      y="5"
+                      width="4"
+                      height="14"
+                      rx="1"
+                    ></rect></svg></sc-if
+                ><sc-if value="{{paused}}" hint-placeholder-val="{{false}}"
+                  ><svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="#1c1917"
+                    aria-hidden="true"
+                  >
+                    <path d="M7 4l13 8-13 8z"></path></svg
+                ></sc-if>
+              </button>
+            </div>
+            <button
+              onClick="{{toggleDims}}"
+              aria-label="Show or hide measurements"
+              style="
+                position: absolute;
+                left: 28px;
+                bottom: 28px;
+                z-index: 3;
+                width: 64px;
+                height: 64px;
+                border: 0;
+                border-radius: 50%;
+                background: #1c1917;
+                color: #fff;
+                display: grid;
+                place-items: center;
+              "
+            >
+              <svg
+                width="26"
+                height="26"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                aria-hidden="true"
+              >
+                <rect
+                  x="3"
+                  y="8"
+                  width="18"
+                  height="8"
+                  rx="1.5"
+                  transform="rotate(-35 12 12)"
+                ></rect>
+                <path
+                  d="M8 10.5l1.5 1.2M11 8.5l1 .8M14 6.5l1.5 1.2"
+                  transform="rotate(-35 12 12)"
+                ></path>
+              </svg>
+            </button>
+            <div
+              style="
+                position: absolute;
+                right: 28px;
+                bottom: 28px;
+                z-index: 3;
+                display: flex;
+                flex-direction: column;
+                gap: 12px;
+              "
+            >
+              <button
+                class="rb"
+                onClick="{{zoomIn}}"
+                aria-label="Zoom in"
+                style="width: 64px; height: 64px"
+              >
+                <svg
+                  width="26"
+                  height="26"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.2"
+                  stroke-linecap="round"
+                  aria-hidden="true"
+                >
+                  <path d="M12 5v14M5 12h14"></path>
+                </svg></button
+              ><button
+                class="rb"
+                onClick="{{zoomOut}}"
+                aria-label="Zoom out"
+                style="width: 64px; height: 64px"
+              >
+                <svg
+                  width="26"
+                  height="26"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.2"
+                  stroke-linecap="round"
+                  aria-hidden="true"
+                >
+                  <path d="M5 12h14"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div
+            class="slidein"
+            style="
+              flex: 0 0 30%;
+              min-width: 340px;
+              height: 100%;
+              overflow-y: auto;
+              overscroll-behavior: contain;
+              box-sizing: border-box;
+              padding: 34px 36px 40px;
+              background: #fff;
+            "
+          >
+            <div style="font-size: 15px; color: #78716c; font-weight: 600">
+              Overview
+            </div>
+            <div
+              style="
+                display: flex;
+                align-items: center;
+                flex-wrap: wrap;
+                gap: 14px;
+                margin-top: 6px;
+              "
+            >
+              <div style="font-size: 36px; font-weight: 800">{{curPrice}}</div>
+              <sc-if value="{{negYes}}" hint-placeholder-val="{{true}}"
+                ><span
+                  style="
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 8px;
+                    background: #e3efe8;
+                    color: #16332c;
+                    border-radius: 99px;
+                    padding: 8px 16px;
+                    font-size: 16px;
+                    font-weight: 600;
+                  "
+                  ><svg
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M19 5L5 19"></path>
+                    <circle cx="7" cy="7" r="2.5"></circle>
+                    <circle cx="17" cy="17" r="2.5"></circle></svg
+                  >Negotiable</span
+                ></sc-if
+              ><sc-if value="{{negNo}}" hint-placeholder-val="{{false}}"
+                ><span
+                  style="
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 8px;
+                    background: #f3eee4;
+                    color: #57534e;
+                    border-radius: 99px;
+                    padding: 8px 16px;
+                    font-size: 16px;
+                    font-weight: 600;
+                  "
+                  ><svg
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    aria-hidden="true"
+                  >
+                    <rect x="5" y="11" width="14" height="9" rx="2"></rect>
+                    <path d="M8 11V8a4 4 0 018 0v3"></path></svg
+                  >Non-negotiable</span
+                ></sc-if
+              >
+            </div>
+            <p style="margin: 10px 0 0; color: #57534e; font-size: 17px">
+              {{cur.tag}}
+            </p>
+            <ul
+              style="
+                margin: 14px 0 0;
+                padding-left: 20px;
+                color: #57534e;
+                line-height: 1.8;
+              "
+            >
+              <sc-for list="{{cur.facts}}" as="t" hint-placeholder-count="3"
+                ><li>{{t}}</li></sc-for
+              >
+            </ul>
+            <div
+              style="
+                display: flex;
+                flex-wrap: wrap;
+                gap: 12px;
+                margin-top: 22px;
+              "
+            >
+              <sc-if value="{{canCustom}}" hint-placeholder-val="{{true}}"
+                ><button
+                  class="btn out"
+                  style="flex: 1 1 150px"
+                  onClick="{{goCustom}}"
+                >
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M14.7 6.3a4 4 0 00-5 5L3 18l3 3 6.7-6.7a4 4 0 005-5l-3 3-2.5-.5-.5-2.5z"
+                    ></path></svg
+                  >Customize
+                </button></sc-if
+              >
+              <button
+                class="btn"
+                style="flex: 1 1 150px"
+                onClick="{{orderNow}}"
+              >
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  aria-hidden="true"
+                >
+                  <path d="M3 4h3l2.5 11h9L20 7H7"></path>
+                  <circle cx="9" cy="19" r="1.5"></circle>
+                  <circle cx="17" cy="19" r="1.5"></circle></svg
+                >Buy as shown
+              </button>
+            </div>
+            <h2 style="font-size: 36px; margin: 30px 0 14px">
+              Additional information
+            </h2>
+            <div
+              style="
+                border: 1.5px solid #e7e0d3;
+                border-radius: 18px;
+                overflow: hidden;
+                background: #f3eee4;
+              "
+            >
+              <dc-import
+                name="Viewer"
+                kind="{{cur.f.kind}}"
+                c1="{{cur.f.c1}}"
+                c2="{{cur.f.c2}}"
+                s="{{cur.f.s}}"
+                n="{{cur.f.n}}"
+                x="{{cur.f.x}}"
+                ls="{{cur.f.ls}}"
+                m="{{cur.f.m}}"
+                fb="{{cur.f.fb}}"
+                lm="{{cur.f.lm}}"
+                shape="{{cur.f.shape}}"
+                st="{{cur.f.st}}"
+                az="{{az}}"
+                h="340"
+                hint-size="100%,340px"
+              ></dc-import>
+            </div>
+            <div
+              style="
+                display: grid;
+                grid-template-columns: repeat(5, minmax(0, 1fr));
+                gap: 10px;
+                margin-top: 14px;
+              "
+            >
+              <sc-for list="{{thumbs}}" as="t" hint-placeholder-count="5"
+                ><button
+                  onClick="{{t.pick}}"
+                  aria-label="View angle"
+                  style="border:2px solid {{t.bc}};background:#f3eee4;border-radius:12px;padding:0;overflow:hidden"
+                >
+                  <dc-import
+                    name="Viewer"
+                    kind="{{cur.f.kind}}"
+                    c1="{{cur.f.c1}}"
+                    c2="{{cur.f.c2}}"
+                    s="{{cur.f.s}}"
+                    n="{{cur.f.n}}"
+                    x="{{cur.f.x}}"
+                    ls="{{cur.f.ls}}"
+                    m="{{cur.f.m}}"
+                    fb="{{cur.f.fb}}"
+                    lm="{{cur.f.lm}}"
+                    shape="{{cur.f.shape}}"
+                    st="{{cur.f.st}}"
+                    az="{{t.az}}"
+                    h="64"
+                    hint-size="100%,64px"
+                  ></dc-import></button
+              ></sc-for>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{vCust}}" hint-placeholder-val="{{false}}">
+        <div
+          class="fade"
+          style="
+            position: fixed;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 5;
+            display: flex;
+            flex-wrap: nowrap;
+            background: #fff;
+            overflow: hidden;
+          "
+        >
+          <div
+            id="stage"
+            style="
+              flex: 1 1 0;
+              min-width: 0;
+              position: relative;
+              overflow: hidden;
+              background: radial-gradient(
+                ellipse at 50% 42%,
+                #fdfbf7 0%,
+                #f2ede3 55%,
+                #ded6c7 100%
+              );
+            "
+          >
+            <dc-import
+              name="Viewer"
+              kind="{{cur.f.kind}}"
+              c1="{{cur.f.c1}}"
+              c2="{{cur.f.c2}}"
+              s="{{cur.f.s}}"
+              n="{{cur.f.n}}"
+              x="{{cur.f.x}}"
+              ls="{{cur.f.ls}}"
+              m="{{cur.f.m}}"
+              fb="{{cur.f.fb}}"
+              lm="{{cur.f.lm}}"
+              shape="{{cur.f.shape}}"
+              st="{{cur.f.st}}"
+              live="1"
+              dim="{{dims}}"
+              spin="{{spin}}"
+              zoom="{{zoom}}"
+              az="{{az}}"
+              h="100vh"
+              hint-size="100%,820px"
+            ></dc-import>
+            <button
+              class="rb"
+              onClick="{{backProd}}"
+              aria-label="Back"
+              style="
+                position: absolute;
+                left: 28px;
+                top: 28px;
+                z-index: 3;
+                width: 64px;
+                height: 64px;
+              "
+            >
+              <svg
+                width="22"
+                height="22"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#1c1917"
+                stroke-width="2.2"
+                aria-hidden="true"
+              >
+                <path d="M19 12H5M11 6l-6 6 6 6"></path>
+              </svg>
+            </button>
+            <div
+              style="
+                position: absolute;
+                left: 44px;
+                top: 110px;
+                z-index: 2;
+                pointer-events: none;
+              "
+            >
+              <div
+                style="
+                  font-family: &quot;Cormorant Garamond&quot;, serif;
+                  font-size: 64px;
+                  font-weight: 700;
+                  line-height: 1;
+                "
+              >
+                {{cur.name}}
+              </div>
+              <div style="font-size: 18px; color: #5b5750; margin-top: 6px">
+                {{cur.tag}}
+              </div>
+            </div>
+            <div
+              style="
+                position: absolute;
+                right: 28px;
+                top: 28px;
+                z-index: 3;
+                display: flex;
+                gap: 10px;
+              "
+            >
+              <button
+                onClick="{{askReset}}"
+                style="
+                  border: 0;
+                  background: #fff;
+                  border-radius: 99px;
+                  height: 64px;
+                  padding: 0 26px;
+                  font-size: 18px;
+                  font-weight: 700;
+                  display: flex;
+                  align-items: center;
+                  gap: 8px;
+                  box-shadow: 0 2px 10px rgba(70, 50, 30, 0.14);
+                "
+              >
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  aria-hidden="true"
+                >
+                  <path d="M4 12a8 8 0 108-8H7M7 1L4 4l3 3"></path></svg
+                >Reset</button
+              ><button
+                class="rb"
+                onClick="{{fullscreen}}"
+                aria-label="Full screen"
+                style="width: 64px; height: 64px"
+              >
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  aria-hidden="true"
+                >
+                  <path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"></path>
+                </svg>
+              </button>
+              <button
+                class="rb"
+                onClick="{{togglePlay}}"
+                aria-label="Pause or play rotation"
+                style="width: 64px; height: 64px"
+              >
+                <sc-if value="{{spin}}" hint-placeholder-val="{{true}}"
+                  ><svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="#1c1917"
+                    aria-hidden="true"
+                  >
+                    <rect x="6" y="5" width="4" height="14" rx="1"></rect>
+                    <rect
+                      x="14"
+                      y="5"
+                      width="4"
+                      height="14"
+                      rx="1"
+                    ></rect></svg></sc-if
+                ><sc-if value="{{paused}}" hint-placeholder-val="{{false}}"
+                  ><svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="#1c1917"
+                    aria-hidden="true"
+                  >
+                    <path d="M7 4l13 8-13 8z"></path></svg
+                ></sc-if>
+              </button>
+            </div>
+            <button
+              onClick="{{toggleDims}}"
+              aria-label="Show or hide measurements"
+              style="
+                position: absolute;
+                left: 28px;
+                bottom: 28px;
+                z-index: 3;
+                width: 64px;
+                height: 64px;
+                border: 0;
+                border-radius: 50%;
+                background: #1c1917;
+                color: #fff;
+                display: grid;
+                place-items: center;
+              "
+            >
+              <svg
+                width="26"
+                height="26"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                aria-hidden="true"
+              >
+                <rect
+                  x="3"
+                  y="8"
+                  width="18"
+                  height="8"
+                  rx="1.5"
+                  transform="rotate(-35 12 12)"
+                ></rect>
+                <path
+                  d="M8 10.5l1.5 1.2M11 8.5l1 .8M14 6.5l1.5 1.2"
+                  transform="rotate(-35 12 12)"
+                ></path>
+              </svg>
+            </button>
+            <div
+              style="
+                position: absolute;
+                right: 28px;
+                bottom: 28px;
+                z-index: 3;
+                display: flex;
+                flex-direction: column;
+                gap: 12px;
+              "
+            >
+              <button
+                class="rb"
+                onClick="{{zoomIn}}"
+                aria-label="Zoom in"
+                style="width: 64px; height: 64px"
+              >
+                <svg
+                  width="26"
+                  height="26"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.2"
+                  stroke-linecap="round"
+                  aria-hidden="true"
+                >
+                  <path d="M12 5v14M5 12h14"></path>
+                </svg></button
+              ><button
+                class="rb"
+                onClick="{{zoomOut}}"
+                aria-label="Zoom out"
+                style="width: 64px; height: 64px"
+              >
+                <svg
+                  width="26"
+                  height="26"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.2"
+                  stroke-linecap="round"
+                  aria-hidden="true"
+                >
+                  <path d="M5 12h14"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div
+            class="slidein"
+            style="
+              flex: 0 0 30%;
+              min-width: 340px;
+              height: 100%;
+              overflow-y: auto;
+              overscroll-behavior: contain;
+              box-sizing: border-box;
+              background: #fff;
+            "
+          >
+            <div
+              style="
+                position: sticky;
+                top: 0;
+                z-index: 4;
+                background: #fff;
+                padding: 26px 32px 16px;
+                border-bottom: 1px solid #e7e0d3;
+              "
+            >
+              <h2 style="font-size: 36px">Choose from available options</h2>
+              <div
+                style="
+                  display: flex;
+                  align-items: center;
+                  justify-content: space-between;
+                  margin-top: 14px;
+                  background: #f7f3ec;
+                  border-radius: 99px;
+                  padding: 6px 6px 6px 22px;
+                "
+              >
+                <strong style="font-size: 26px">{{total}}</strong
+                ><button
+                  class="btn"
+                  style="
+                    min-height: 58px;
+                    border-radius: 99px;
+                    font-size: 19px;
+                    background: #8f6f33;
+                  "
+                  onClick="{{toSummary}}"
+                >
+                  Summary<svg
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.2"
+                    aria-hidden="true"
+                  >
+                    <path d="M5 12h14M13 6l6 6-6 6"></path>
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <div style="padding: 4px 32px 24px">
+              <sc-for list="{{groups}}" as="g" hint-placeholder-count="5">
+                <section
+                  style="padding: 22px 0; border-bottom: 1px solid #e7e0d3"
+                >
+                  <div
+                    style="
+                      display: flex;
+                      align-items: center;
+                      gap: 10px;
+                      margin-bottom: 16px;
+                    "
+                  >
+                    <sc-if
+                      value="{{g.ic.fabric}}"
+                      hint-placeholder-val="{{true}}"
+                      ><svg
+                        width="22"
+                        height="22"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.7"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        aria-hidden="true"
+                      >
+                        <rect x="4" y="4" width="16" height="16" rx="3"></rect>
+                        <path
+                          d="M4 9h16M4 15h16M9 4v16M15 4v16"
+                        ></path></svg></sc-if
+                    ><sc-if
+                      value="{{g.ic.color}}"
+                      hint-placeholder-val="{{false}}"
+                      ><svg
+                        width="22"
+                        height="22"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.7"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        aria-hidden="true"
+                      >
+                        <path
+                          d="M12 3a9 9 0 100 18c1.2 0 2-.8 2-1.8 0-1.4-1.2-1.6-1.2-2.8 0-.9.7-1.4 1.6-1.4H17a4 4 0 004-4c0-4.4-4-8-9-8z"
+                        ></path>
+                        <circle cx="7.5" cy="11" r="1"></circle>
+                        <circle cx="10" cy="7" r="1"></circle>
+                        <circle cx="15" cy="7.5" r="1"></circle></svg></sc-if
+                    ><sc-if
+                      value="{{g.ic.layout}}"
+                      hint-placeholder-val="{{false}}"
+                      ><svg
+                        width="22"
+                        height="22"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.7"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        aria-hidden="true"
+                      >
+                        <path d="M3 8h12v7h6v4H3z"></path>
+                        <path d="M6 8V5h6v3"></path></svg></sc-if
+                    ><sc-if
+                      value="{{g.ic.legs}}"
+                      hint-placeholder-val="{{false}}"
+                      ><svg
+                        width="22"
+                        height="22"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.7"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        aria-hidden="true"
+                      >
+                        <rect x="3" y="5" width="18" height="5" rx="2"></rect>
+                        <path d="M6 10l-1 9M18 10l1 9"></path></svg></sc-if
+                    ><sc-if
+                      value="{{g.ic.size}}"
+                      hint-placeholder-val="{{false}}"
+                      ><svg
+                        width="22"
+                        height="22"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.7"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        aria-hidden="true"
+                      >
+                        <rect x="3" y="8" width="18" height="8" rx="1.5"></rect>
+                        <path
+                          d="M7 8v3M11 8v4M15 8v3M19 8v4"
+                        ></path></svg></sc-if
+                    ><sc-if
+                      value="{{g.ic.cushions}}"
+                      hint-placeholder-val="{{false}}"
+                      ><svg
+                        width="22"
+                        height="22"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.7"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        aria-hidden="true"
+                      >
+                        <rect x="3" y="9" width="18" height="8" rx="4"></rect>
+                        <path
+                          d="M6 9V7a2 2 0 012-2h8a2 2 0 012 2v2"
+                        ></path></svg></sc-if
+                    ><sc-if
+                      value="{{g.ic.frame}}"
+                      hint-placeholder-val="{{false}}"
+                      ><svg
+                        width="22"
+                        height="22"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.7"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        aria-hidden="true"
+                      >
+                        <path
+                          d="M7 3v10M17 3v10M7 8h10M5 13h14M7 13v8M17 13v8"
+                        ></path></svg></sc-if
+                    ><sc-if
+                      value="{{g.ic.headboard}}"
+                      hint-placeholder-val="{{false}}"
+                      ><svg
+                        width="22"
+                        height="22"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.7"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        aria-hidden="true"
+                      >
+                        <path
+                          d="M4 5v15M20 5v15M4 12h16M4 16h16M7 12V9h4v3M13 12V9h4v3"
+                        ></path></svg></sc-if
+                    ><sc-if
+                      value="{{g.ic.storage}}"
+                      hint-placeholder-val="{{false}}"
+                      ><svg
+                        width="22"
+                        height="22"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.7"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        aria-hidden="true"
+                      >
+                        <rect x="4" y="5" width="16" height="14" rx="2"></rect>
+                        <path
+                          d="M4 12h16M10 8.5h4M10 15.5h4"
+                        ></path></svg></sc-if
+                    ><sc-if
+                      value="{{g.ic.material}}"
+                      hint-placeholder-val="{{false}}"
+                      ><svg
+                        width="22"
+                        height="22"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.7"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        aria-hidden="true"
+                      >
+                        <path d="M12 3l9 5-9 5-9-5z"></path>
+                        <path d="M3 13l9 5 9-5"></path></svg></sc-if
+                    ><sc-if
+                      value="{{g.ic.shape}}"
+                      hint-placeholder-val="{{false}}"
+                      ><svg
+                        width="22"
+                        height="22"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.7"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        aria-hidden="true"
+                      >
+                        <circle cx="8" cy="8" r="4"></circle>
+                        <rect
+                          x="12"
+                          y="12"
+                          width="8"
+                          height="8"
+                          rx="1.5"
+                        ></rect></svg
+                    ></sc-if>
+                    <h3 style="font-size: 30px">{{g.label}}</h3>
+                    <span style="color: #78716c; font-size: 19px"
+                      >{{g.curLabel}}</span
+                    >
+                  </div>
+                  <div style="display: flex; flex-wrap: wrap; gap: 14px">
+                    <sc-for list="{{g.opts}}" as="o" hint-placeholder-count="5">
+                      <sc-if value="{{g.sw}}" hint-placeholder-val="{{true}}"
+                        ><div
+                          style="
+                            display: flex;
+                            flex-direction: column;
+                            align-items: center;
+                            gap: 8px;
+                            width: 98px;
+                          "
+                        >
+                          <button
+                            class="{{o.swCls}}"
+                            onClick="{{o.pick}}"
+                            aria-label="{{o.l}}"
+                            style="background:{{o.col}}"
+                          >
+                            <sc-if
+                              value="{{o.hasPat}}"
+                              hint-placeholder-val="{{false}}"
+                              ><dc-import
+                                name="Swatch"
+                                t="{{o.pat}}"
+                                hint-size="66px,66px"
+                              ></dc-import
+                            ></sc-if></button
+                          ><span
+                            style="
+                              font-size: 16px;
+                              font-weight: 600;
+                              text-align: center;
+                            "
+                            >{{o.l}}</span
+                          ><span
+                            style="
+                              font-size: 14px;
+                              color: #78716c;
+                              min-height: 17px;
+                            "
+                            >{{o.d}}</span
+                          >
+                        </div></sc-if
+                      >
+                      <sc-if value="{{g.pill}}" hint-placeholder-val="{{false}}"
+                        ><button class="{{o.cls}}" onClick="{{o.pick}}">
+                          {{o.l}}<span style="color: #78716c; font-weight: 500">
+                            {{o.d}}</span
+                          >
+                        </button></sc-if
+                      >
+                    </sc-for>
+                  </div>
+                </section>
+              </sc-for>
+              <div id="design-end" style="padding: 26px 0 40px">
+                <h3 style="font-size: 34px; margin-bottom: 14px">
+                  Your design
+                </h3>
+                <div
+                  style="
+                    display: grid;
+                    grid-template-columns: auto 1fr;
+                    gap: 6px 18px;
+                    font-size: 15px;
+                  "
+                >
+                  <sc-for list="{{groups}}" as="g" hint-placeholder-count="5"
+                    ><span style="color: #78716c">{{g.label}}</span
+                    ><span style="font-weight: 600"
+                      >{{g.curLabel}}</span
+                    ></sc-for
+                  >
+                </div>
+                <div
+                  style="
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: baseline;
+                    margin: 20px 0;
+                    border-top: 1px solid #e7e0d3;
+                    padding-top: 16px;
+                  "
+                >
+                  <span style="color: #78716c">Total</span
+                  ><strong style="font-size: 30px">{{total}}</strong>
+                </div>
+                <div style="margin-bottom: 16px">
+                  <sc-if value="{{negYes}}" hint-placeholder-val="{{true}}"
+                    ><span
+                      style="
+                        display: inline-flex;
+                        align-items: center;
+                        gap: 8px;
+                        background: #e3efe8;
+                        color: #16332c;
+                        border-radius: 99px;
+                        padding: 8px 16px;
+                        font-size: 16px;
+                        font-weight: 600;
+                      "
+                      ><svg
+                        width="18"
+                        height="18"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        aria-hidden="true"
+                      >
+                        <path d="M19 5L5 19"></path>
+                        <circle cx="7" cy="7" r="2.5"></circle>
+                        <circle cx="17" cy="17" r="2.5"></circle></svg
+                      >Negotiable</span
+                    ></sc-if
+                  ><sc-if value="{{negNo}}" hint-placeholder-val="{{false}}"
+                    ><span
+                      style="
+                        display: inline-flex;
+                        align-items: center;
+                        gap: 8px;
+                        background: #f3eee4;
+                        color: #57534e;
+                        border-radius: 99px;
+                        padding: 8px 16px;
+                        font-size: 16px;
+                        font-weight: 600;
+                      "
+                      ><svg
+                        width="18"
+                        height="18"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        aria-hidden="true"
+                      >
+                        <rect x="5" y="11" width="14" height="9" rx="2"></rect>
+                        <path d="M8 11V8a4 4 0 018 0v3"></path></svg
+                      >Non-negotiable</span
+                    ></sc-if
+                  >
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 10px">
+                  <button class="btn" onClick="{{addPos}}">
+                    <svg
+                      width="26"
+                      height="26"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.9"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"></path>
+                      <path d="M9 8h6M9 12h6"></path></svg
+                    >Quote / Bill</button
+                  ><button class="btn out" onClick="{{addCustom}}">
+                    <svg
+                      width="26"
+                      height="26"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.9"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <path d="M3 4h3l2.5 11h9L20 7H7"></path>
+                      <circle cx="9" cy="19" r="1.5"></circle>
+                      <circle cx="17" cy="19" r="1.5"></circle></svg
+                    >{{addLabel}}</button
+                  ><button class="btn out" onClick="{{save}}">
+                    <svg
+                      width="26"
+                      height="26"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.9"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <path
+                        d="M12 21s-8-5.2-8-11a4.5 4.5 0 018-2.8A4.5 4.5 0 0120 10c0 5.8-8 11-8 11z"
+                      ></path></svg
+                    >Save design
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{floatCart}}" hint-placeholder-val="{{false}}"
+        ><button
+          class="pop"
+          onClick="{{goCart}}"
+          style="
+            position: fixed;
+            right: 24px;
+            bottom: 24px;
+            z-index: 8;
+            border: 0;
+            border-radius: 99px;
+            height: 56px;
+            padding: 0 20px 0 22px;
+            background: rgba(22, 51, 44, 0.95);
+            color: #fff;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 14px 34px rgba(28, 25, 23, 0.3);
+          "
+        >
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            aria-hidden="true"
+          >
+            <path d="M3 4h3l2.5 11h9L20 7H7"></path>
+            <circle cx="9" cy="19" r="1.5"></circle>
+            <circle cx="17" cy="19" r="1.5"></circle></svg
+          >View cart<span
+            style="
+              background: #fff;
+              color: #1c1917;
+              border-radius: 99px;
+              min-width: 24px;
+              height: 24px;
+              display: grid;
+              place-items: center;
+              font-size: 12px;
+              padding: 0 6px;
+            "
+            >{{cartCount}}</span
+          >
+        </button></sc-if
+      >
+      <sc-if value="{{showReset}}" hint-placeholder-val="{{false}}"
+        ><div
+          class="fade"
+          style="
+            position: fixed;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 20;
+            background: rgba(28, 25, 23, 0.55);
+            backdrop-filter: blur(6px);
+            display: grid;
+            place-items: center;
+            padding: 24px;
+          "
+        >
+          <div
+            class="card pop"
+            role="dialog"
+            aria-label="Confirm reset"
+            style="
+              max-width: 540px;
+              width: 100%;
+              padding: 40px;
+              text-align: center;
+              box-sizing: border-box;
+            "
+          >
+            <h3 style="font-size: 42px; margin-bottom: 12px">
+              Reset your design?
+            </h3>
+            <p
+              style="
+                margin: 0 0 30px;
+                color: #57534e;
+                font-size: 20px;
+                line-height: 1.5;
+              "
+            >
+              All your changes to this piece will be removed and it will go back
+              to the original design.
+            </p>
+            <div style="display: flex; gap: 14px">
+              <button class="btn out" style="flex: 1" onClick="{{cancelReset}}">
+                Cancel</button
+              ><button class="btn" style="flex: 1" onClick="{{doReset}}">
+                Yes, reset
+              </button>
+            </div>
+          </div>
+        </div></sc-if
+      >
+      <sc-if value="{{toast}}" hint-placeholder-val="{{false}}"
+        ><div
+          role="status"
+          class="toast"
+          style="
+            position: fixed;
+            left: 50%;
+            bottom: 28px;
+            transform: translateX(-50%);
+            background: #1c1917;
+            color: #fff;
+            padding: 14px 22px;
+            border-radius: 14px;
+            font-weight: 600;
+            z-index: 9;
+          "
+        >
+          {{toast}}
+        </div></sc-if
+      >
+    </x-dc>
+    <script
+      type="text/x-dc"
+      data-dc-script
+      data-props='{"$preview":{"width":1360,"height":1500}}'
+    >
+      const mk=a=>a.map(x=>({l:x[0],v:x[1],p:x[2],m:x[3]}));
+      const FBG=[`repeating-linear-gradient(0deg,rgba(0,0,0,.09) 0 1px,transparent 1px 3px),repeating-linear-gradient(90deg,rgba(0,0,0,.09) 0 1px,transparent 1px 3px),#d8cbb6`,`repeating-linear-gradient(0deg,rgba(0,0,0,.13) 0 2px,transparent 2px 5px),repeating-linear-gradient(90deg,rgba(0,0,0,.07) 0 1px,transparent 1px 4px),#d3c5ae`,`radial-gradient(circle at 30% 28%,rgba(255,255,255,.6),rgba(0,0,0,.2)),#b9a894`,`radial-gradient(circle,rgba(0,0,0,.2) 1.5px,transparent 2px) 0 0/6px 6px,#e4dccf`,`radial-gradient(circle,rgba(0,0,0,.14) .8px,transparent 1px) 0 0/4px 4px,linear-gradient(135deg,#a9744c,#7c4e2e)`];
+      const FABS=k=>[['Cotton',0],['Linen',2000],['Velvet',4000],['Bouclé',5000],['Leather',12000],['Herringbone',6000],['Corduroy',4000],['Tweed',7000]].map((x,i)=>({l:x[0],v:i,p:Math.round(x[1]*k/100)*100,bg:FBG[i]||'#cfc3ae',pat:i}));
+      const COL=mk([['Oat','#d8cbb6',0],['Grey','#a7a7a4',0],['Brown','#6b4b3a',0],['Olive','#6b7a4a',0],['Navy','#2f4f7a',0],['Stone','#8d8a84',0]]);
+      const WD=mk([['Oak','#c9a074',0],['Walnut','#5a3d2b',1000],['Black','#26231f',1000]]);
+      const WCOL=mk([['Oak','#c9a074',0],['Walnut','#6a4630',2000],['White','#f1eeea',0],['Sage','#9aa58c',1000],['Charcoal','#3b3b3b',1000]]);
+      const LEGC=mk([['Oak','#c9a074',0],['Walnut','#5a3d2b',1000],['Black','#26231f',1000],['Brass','#b08d57',2000]]);
+      const HC=mk([['Brass','#b08d57',0],['Black','#26231f',0],['Steel','#a8a8a8',0]]);
+      const MB=[`repeating-linear-gradient(95deg,rgba(60,30,10,.2) 0 1px,transparent 1px 5px),#c9a074`,`linear-gradient(120deg,#f1eeea 40%,#c9c6c1 41% 43%,#f1eeea 44%),#f1eeea`,`linear-gradient(135deg,rgba(255,255,255,.7),rgba(160,200,205,.5)),#cfe6e8`];
+      const TMAT=k=>({k:'tm',label:'Material',ic:'material',o:[{l:'Wood',set:{m:'wood'},p:0,bg:MB[0],pat:8,f1:0},{l:'Marble',set:{m:'marble'},p:Math.round(12000*k),bg:MB[1],pat:9,f1:4},{l:'Glass',set:{m:'glass'},p:Math.round(8000*k),bg:MB[2],pat:10,f1:6}]});
+      const TCOL=d=>({k:'c1',label:'Color',ic:'color',by:'m',d:d,o:mk([['Natural','#e0c4a0',0,'wood'],['Oak','#c9a074',0,'wood'],['Walnut','#6a4630',3000,'wood'],['Dark','#3f2a1c',3000,'wood'],['White','#e8e4de',0,'marble'],['Grey','#b3b3b3',0,'marble'],['Clear','#cfe6e8',0,'glass'],['Smoke','#6b7478',0,'glass']])});
+      const SHAPE=d=>({k:'shape',label:'Shape',ic:'shape',d:d,o:mk([['Rectangle','rect',0],['Round','round',0],['Oval','oval',2500]])});
+      const LEGS3=({k:'ls',label:'Legs',ic:'legs',o:mk([['Tapered',0,0],['Block',1,1000],['Hairpin',2,2000]])});
+      const LEGM={k:'lm',label:'Leg material',ic:'material',o:[{l:'Wooden',set:{lm:'wood'},p:0,bg:'#c9a074',pat:8,f2:0},{l:'Metal',set:{lm:'metal'},p:1500,bg:'#2a2a2e',pat:11,f2:3},{l:'Steel',set:{lm:'steel'},p:3000,bg:'#c0c4ca',pat:12,f2:7}]};
+      const LEGC2={k:'c2',label:'Leg color',ic:'color',by:'lm',byf:'lv',o:[['Oak','#c9a074',0,'wood'],['Walnut','#5a3d2b',1000,'wood'],['Ebony','#26231f',1000,'wood'],['Black','#26231f',0,'metal'],['White','#f1eeea',0,'metal'],['Bronze','#8a6a3a',800,'metal'],['Brass','#b08d57',2000,'metal'],['Brushed','#b9bcc0',0,'steel'],['Chrome','#dfe3e8',1500,'steel'],['Gunmetal','#5c6168',1000,'steel']].map(x=>({l:x[0],v:x[1],p:x[2],lv:x[3]}))};
+      const TLEGS=({k:'ls',label:'Legs',ic:'legs',d:2,o:mk([['Four legs',0,0],['Pedestal',1,3000],['X frame',2,2000]])});
+      const TLEGC=({k:'c2',label:'Leg color',ic:'color',o:mk([['Black','#26231f',0],['Oak','#b98a5a',0],['Brass','#b08d57',3000]])});
+      const PRODUCTS=[
+      {id:'sofa',cat:'sofas',name:'Modular Fabric Sofa',kind:'sofa',base:47990,neg:true,tag:'Deep, soft seating you can configure your way',facts:['Solid kiln-dried frame','Removable seat cushions','Free delivery'],g:[
+      {k:'fb',label:'Fabric',ic:'fabric',o:FABS(1)},{k:'c1',label:'Color',ic:'color',o:COL},
+      {k:'x',label:'Layout',ic:'layout',d:1,o:mk([['Straight',0,-9000],['L-shape',1,0]])},LEGS3,LEGM,LEGC2,
+      {k:'s',label:'Size',ic:'size',d:1,o:[{l:'2-seat',set:{s:.85,n:2},p:-12000},{l:'3-seat',set:{s:1.1,n:3},p:0},{l:'4-seat',set:{s:1.35,n:4},p:15000}]}]},
+      {id:'loveseat',cat:'sofas',name:'Compact Loveseat',kind:'sofa',base:32990,neg:true,tag:'Two-seat comfort for smaller rooms',facts:['Solid kiln-dried frame','Removable seat cushions','Free delivery'],g:[
+      {k:'fb',label:'Fabric',ic:'fabric',o:FABS(.8)},{k:'c1',label:'Color',ic:'color',d:1,o:COL},LEGS3,LEGM,LEGC2,
+      {k:'s',label:'Size',ic:'size',d:1,o:[{l:'Compact',set:{s:.78,n:2},p:-4000},{l:'Standard',set:{s:.9,n:2},p:0},{l:'Wide',set:{s:1,n:3},p:6000}]}]},
+      {id:'chair',cat:'chairs',name:'Mono Armchair',kind:'chair',base:12990,neg:false,tag:'A reading chair with a calm shape',facts:['Hand-finished frame','High-resilience foam','Free delivery'],g:[
+      {k:'fb',label:'Fabric',ic:'fabric',o:FABS(.25)},{k:'c1',label:'Color',ic:'color',d:3,o:COL},{k:'c2',label:'Frame',ic:'frame',o:WD},{k:'ls',label:'Legs',ic:'legs',o:mk([['Tapered',0,0],['Block',1,800]])}]},
+      {id:'dchair',cat:'chairs',name:'Linen Dining Chair',kind:'dchair',base:6990,neg:false,tag:'An upholstered chair for everyday meals',facts:['Hardwood frame','Padded seat','Free delivery'],g:[
+      {k:'fb',label:'Fabric',ic:'fabric',o:FABS(.12)},{k:'c1',label:'Color',ic:'color',d:1,o:COL},{k:'c2',label:'Frame',ic:'frame',o:WD},{k:'ls',label:'Legs',ic:'legs',o:mk([['Tapered',0,0],['Block',1,400]])}]},
+      {id:'bed',cat:'beds',name:'Haven Bed',kind:'bed',base:54990,neg:true,tag:'A calm, solid bed frame',facts:['Slatted base included','Quiet-close drawers','Free delivery'],g:[
+      {k:'fb',label:'Fabric',ic:'fabric',o:FABS(.5)},{k:'c1',label:'Color',ic:'color',o:COL},{k:'x',label:'Headboard',ic:'headboard',o:mk([['Flat',0,0],['Tufted',1,6000],['Slatted',2,4000]])},{k:'c2',label:'Frame',ic:'frame',o:WD},
+      {k:'s',label:'Size',ic:'size',o:mk([['Queen',.9,0],['King',1.15,12000]])},{k:'st',label:'Storage',ic:'storage',o:mk([['None',0,0],['Drawers',1,14000]])}]},
+      {id:'table',cat:'tables',name:'Oslo Dining Table',kind:'table',base:32990,neg:true,tag:'Gather around something solid',facts:['Scratch-resistant finish','Seats 4 to 8','Free delivery'],g:[
+      TMAT(1),TCOL(2),SHAPE(0),{k:'s',label:'Size',ic:'size',d:1,o:mk([['4 seats',.85,-8000],['6 seats',1.1,0],['8 seats',1.35,12000]])},TLEGS,{...LEGM,d:1},{...LEGC2,d:3}]},
+      {id:'coffee',cat:'tables',name:'Aria Coffee Table',kind:'coffee',base:14990,neg:false,tag:'A low table for the heart of the room',facts:['Scratch-resistant finish','Rounded edges','Free delivery'],g:[
+      TMAT(.5),TCOL(1),SHAPE(1),{k:'s',label:'Size',ic:'size',d:1,o:mk([['Small',.85,-3000],['Medium',1,0],['Large',1.25,4000]])},TLEGS,{...LEGM,d:1},{...LEGC2,d:3}]},
+      {id:'shelf',cat:'more',name:'Atlas Bookcase',kind:'shelf',base:18990,neg:false,tag:'Open shelves in warm oak',facts:['Adjustable shelves','Wall anchor included','Free delivery'],g:[]},
+      {id:'wardrobe',cat:'more',name:'Mira Wardrobe',kind:'wardrobe',base:42990,neg:true,tag:'Tall storage with a clean front',facts:['Soft-close doors','Adjustable inner shelves','Free delivery'],g:[
+      {k:'c1',label:'Color',ic:'color',o:WCOL},{k:'n',label:'Doors',ic:'storage',o:mk([['2 doors',2,0],['3 doors',3,6000],['4 doors',4,14000]])},{k:'ls',label:'Handles',ic:'frame',o:mk([['Bar',0,0],['Knob',1,500]])},{k:'c2',label:'Handle color',ic:'color',o:HC},
+      {k:'s',label:'Width',ic:'size',d:1,o:mk([['Compact',.75,-8000],['Standard',1,0],['Wide',1.3,10000]])}]},
+      {id:'sideboard',cat:'more',name:'Nord Sideboard',kind:'sideboard',base:28990,neg:true,tag:'Low storage for the dining room or hall',facts:['Soft-close doors','Solid wood legs','Free delivery'],g:[
+      {k:'c1',label:'Color',ic:'color',o:WCOL},{k:'n',label:'Doors',ic:'storage',o:mk([['2 doors',2,0],['3 doors',3,3000],['4 doors',4,6000]])},LEGS3,LEGM,LEGC2,
+      {k:'s',label:'Size',ic:'size',d:1,o:mk([['Compact',.85,-4000],['Standard',1,0],['Long',1.25,6000]])}]},
+      {id:'lamp',cat:'more',name:'Luma Floor Lamp',kind:'lamp',base:4990,neg:false,tag:'Soft, warm light',facts:['Dimmer switch','Linen shade','Free delivery'],g:[]}];
+      const vg=p=>p.g.find(g=>g.k==='c1');
+      const CATS=[['sofas','Sofas','sofa'],['chairs','Chairs','chair'],['beds','Beds','bed'],['tables','Tables','table'],['more','Storage','shelf']];
+      const AZ=[.7,0,-.7,1.6,3.14];
+      const $=n=>'₹'+Math.round(n).toLocaleString('en-IN');
+      const ix=(g,sel)=>sel[g.k]===undefined?(g.d||0):sel[g.k];
+      const col=o=>o.bg||(o.set?o.set.c2:(typeof o.v==='string'&&o.v[0]==='#'?o.v:null));
+      class Component extends DCLogic {
+      constructor(p){super(p);this.state={view:'home',cat:'all',q:'',pid:'sofa',sel:{},grp:0,gi:0,favs:{},saved:{},cart:[],toast:'',spin:true,dims:true,edit:null,hi:0,hf:true,zoom:1,confirmReset:false,favView:false,cust:{name:'',phone:'',addr:''},doc:'',seq:1001,err:'',docNo:'',docDate:''};}
+      componentDidMount(){this._hi=setInterval(()=>{const S=this.state;if(S.view==='home'&&!S.q&&!S.favView&&S.cat==='all')this.setState({hi:(S.hi+1)%PRODUCTS.length,hf:!S.hf});},4500);}
+      componentWillUnmount(){clearInterval(this._hi);}
+      fig(p,sel){const f={kind:p.kind,c1:'#d8cbb6',c2:'#b98a5a',s:1,n:3,x:0,shape:'rect',st:0,ls:0,m:'wood',fb:0,lm:'wood'};p.g.forEach(g=>{const o=g.o[ix(g,sel)];if(o.set)Object.assign(f,o.set);else f[g.k]=o.v;if(o.m)f.m=o.m;});return f;}
+      price(p,sel){return p.g.reduce((t,g)=>t+g.o[ix(g,sel)].p,p.base);}
+      gen(t){const c=this.state.cust,d=c.phone.replace(/\D/g,'');if(!c.name.trim()||d.length<10||!c.addr.trim()){this.setState({err:!c.name.trim()?'Enter the customer name.':d.length<10?'Enter a 10-digit contact number.':'Enter the delivery address.'});return;}
+      this.setState({view:'doc',doc:t,err:'',seq:this.state.seq+1,docNo:(t==='quote'?'QT-':'INV-')+this.state.seq,docDate:new Date().toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'})});}
+      note(t){this.setState({toast:t});clearTimeout(this._t);this._t=setTimeout(()=>this.setState({toast:''}),2200);}
+      add(p,sel,v){const summary=p.g.length?p.g.map(g=>g.o[ix(g,sel)].l).join(' · '):'Standard',key=p.id+summary,c=this.state.cart.slice(),i=c.findIndex(x=>x.key===key);
+      const ed=this.state.edit,ei=ed?c.findIndex(x=>x.key===ed):-1;
+      if(ei>=0){const o=c.findIndex((x,j)=>j!==ei&&x.key===key);if(o>=0){c[o]={...c[o],qty:c[o].qty+c[ei].qty};c.splice(ei,1);}else c[ei]={key,pid:p.id,summary,sel:{...sel},qty:c[ei].qty};}
+      else if(i>=0)c[i]={...c[i],qty:c[i].qty+1};else c.push({key,pid:p.id,summary,sel:{...sel},qty:1});
+      this.setState({cart:c,view:v||'cart',edit:null});}
+      renderVals(){
+      const S=this.state,P=PRODUCTS,cur=P.find(p=>p.id===S.pid),q=S.q.trim().toLowerCase(),sel=S.sel;
+      const searching=!!q||S.favView,inCat=S.cat!=='all'&&!searching;
+      const favCount=Object.keys(S.favs).filter(k=>S.favs[k]).length,cartCount=S.cart.reduce((t,x)=>t+x.qty,0);
+      const catName=(CATS.find(c=>c[0]===S.cat)||[0,''])[1];
+      let items=[];
+      const base=P.filter(p=>(S.cat==='all'||p.cat===S.cat)&&(!q||(p.name+' '+p.kind+' '+p.tag+' '+p.cat).toLowerCase().includes(q))&&(!S.favView||S.favs[p.id]));
+      if(inCat)base.forEach(p=>{if(p.g.length)vg(p).o.slice(0,6).forEach((o,i)=>items.push({p,sel:{c1:i},v:true}));else items.push({p,sel:{},v:false});});
+      else base.forEach(p=>items.push({p,sel:{},v:false}));
+      const fav=id=>this.setState({favs:{...S.favs,[id]:!S.favs[id]}});
+      const fg=this.fig(cur,sel);
+      const groups=cur.g.map((g,gi)=>{const ci=ix(g,sel),sw=g.o.every(o=>col(o));
+      const all=g.o.map((o,i)=>({l:o.l,m:o.m,lv:o.lv,pat:o.pat,hasPat:o.pat!==undefined,col:col(o),d:o.p?(o.p>0?'+':'−')+$(Math.abs(o.p)):'',cls:'pill'+(i===ci?' on':''),swCls:'sw'+(i===ci?' on':''),pick:()=>this.setState({sel:{...S.sel,[g.k]:i,...(o.f1!==undefined?{c1:o.f1}:{}),...(o.f2!==undefined?{c2:o.f2}:{})}})}));
+      return {railCls:'rl'+(gi===S.grp?' on':''),open:()=>this.setState({grp:gi}),label:g.label,ic:{[g.ic]:true},curLabel:g.o[ci].l,sw,pill:!sw,opts:g.by?all.filter(o=>o[g.byf||'m']===fg[g.by]):all};});
+      const ag=groups[Math.min(S.grp,Math.max(groups.length-1,0))]||{opts:[],tabs:[]};
+      const lines=S.cart.map((c,idx)=>{const p=P.find(x=>x.id===c.pid),u=this.price(p,c.sel),set=f=>this.setState({cart:S.cart.map((y,j)=>j===idx?f(y):y).filter(y=>y.qty>0)});
+      return {name:p.name,editItem:()=>{const cu=p.g.length>0;this.setState({pid:c.pid,sel:{...c.sel},view:cu?'custom':'product',grp:0,gi:0,spin:true,edit:cu?c.key:null});if(cu)setTimeout(()=>{const e=document.getElementById('design-end');if(e)e.scrollIntoView({block:'start'});},400);},summary:c.summary,qty:c.qty,f:this.fig(p,c.sel),unitTxt:$(u*c.qty),amt:$(u*c.qty),rate:$(u),det:p.g.length?p.g.map(g=>({k:g.label,v:g.o[ix(g,c.sel)].l})):[{k:'Finish',v:'Standard, as shown'}],_u:u,dots:p.g.map(g=>col(g.o[ix(g,c.sel)])).filter(c=>c&&c[0]==='#').slice(0,3),plus:()=>set(y=>({...y,qty:y.qty+1})),minus:()=>set(y=>({...y,qty:y.qty-1})),remove:()=>set(y=>({...y,qty:0}))};});
+      const cartTotal=lines.reduce((t,l)=>t+l._u*l.qty,0),az=AZ[S.gi%5];
+      const go=v=>()=>this.setState({view:v});const hp=P[S.hi%P.length];
+      return {
+      q:S.q,favCount,cartCount,hasFavs:favCount>0,hasCart:cartCount>0,cartEmpty:cartCount===0,favHeader:S.favView?'#1c1917':'none',
+      vHome:S.view==='home'&&!inCat&&!S.favView,vCatHead:S.view==='home'&&(inCat||S.favView),vList:S.view==='home',vProd:S.view==='product',vCust:S.view==='custom',vCart:S.view==='cart',
+      goHome:()=>this.setState({view:'home',cat:'all',q:'',favView:false,edit:null}),goCart:go('cart'),userNote:()=>this.note('Sign-in is not part of this demo'),
+      onSearch:e=>this.setState({q:e.target.value,view:'home',favView:false}),
+      toggleFavView:()=>this.setState({favView:!S.favView,view:'home',cat:'all',q:''}),
+      cats:CATS.map(c=>({name:c[1],bg:'#fff',f:this.fig(P.find(p=>p.kind===c[2]),{}),pick:()=>this.setState({cat:c[0],q:'',favView:false,view:'home'})})),
+      gridTitle:S.favView?'Favorites':(inCat?catName:(q?'Results':'Popular pieces')),noResults:items.length===0,
+      grid:items.map(it=>{const p=it.p;return {name:p.name,from:(p.g.length?'From ':'')+$(this.price(p,it.sel)),f:this.fig(p,it.sel),dots:it.v,info:!it.v,ring:'none',dotList:it.v?vg(p).o.slice(0,4).map(o=>col(o)):[],heart:S.favs[p.id]?'#e5484d':'none',heartLine:S.favs[p.id]?'#e5484d':'#1c1917',fav:()=>fav(p.id),open:()=>this.setState({pid:p.id,view:'product',sel:S.saved[p.id]||it.sel,grp:0,gi:0,spin:true,zoom:1,edit:null})};}),
+      backList:go('home'),
+      cur:{name:cur.name,tag:cur.tag,facts:cur.facts,f:this.fig(cur,sel)},az,curPrice:$(this.price(cur,sel)),canCustom:cur.g.length>0,
+      curHeart:S.favs[cur.id]?'#e5484d':'none',curFav:()=>fav(cur.id),
+      prevImg:()=>this.setState({gi:(S.gi+4)%5}),nextImg:()=>this.setState({gi:(S.gi+1)%5}),
+      thumbs:AZ.map((a,i)=>({az:a,bc:i===S.gi%5?'#8f6f33':'transparent',pick:()=>this.setState({gi:i,spin:false})})),
+      goCustom:()=>this.setState({view:'custom',grp:0,spin:true,zoom:1,sel:S.saved[cur.id]||sel}),backProd:()=>this.setState({view:S.edit?'cart':'product',edit:null}),orderNow:()=>this.add(cur,sel),
+      groups,ag,focus:(ag.label==='Legs')?'legs':'',total:$(this.price(cur,sel)),addCustom:()=>this.add(cur,sel),
+      reset:()=>{this.setState({sel:{}});this.note('Back to the original design');},
+      fullscreen:()=>{try{const e=document.getElementById('stage');if(document.fullscreenElement)document.exitFullscreen();else e.requestFullscreen();}catch(_){this.note('Full screen is not available here');}},
+      save:()=>{this.setState({saved:{...S.saved,[cur.id]:{...sel}},favs:{...S.favs,[cur.id]:true}});this.note('Design saved to favorites');},
+      floatCart:S.view==='home'&&cartCount>0,zoom:S.zoom,zoomIn:()=>this.setState({zoom:Math.min(2.2,S.zoom*1.25)}),zoomOut:()=>this.setState({zoom:Math.max(.6,S.zoom/1.25)}),showReset:S.confirmReset,askReset:()=>this.setState({confirmReset:true}),cancelReset:()=>this.setState({confirmReset:false}),doReset:()=>{this.setState({sel:{},confirmReset:false});this.note('Back to the original design');},wrapDisp:(S.view==='product'||S.view==='custom')?'none':'block',negYes:!!cur.neg,negNo:!cur.neg,hero:{name:hp.name,price:(hp.g.length?'From ':'')+$(this.price(hp,{})),f:this.fig(hp,{})},hcls:S.hf?'fadeA':'fadeB',heroOpen:()=>this.setState({pid:hp.id,view:'product',sel:{},grp:0,gi:0,spin:true,edit:null}),heroDots:P.map((p,i)=>({w:i===S.hi%P.length?'28px':'10px',bg:i===S.hi%P.length?'#e2d3ae':'rgba(255,255,255,.5)',pick:()=>this.setState({hi:i,hf:!S.hf})})),spin:S.spin,paused:!S.spin,dims:S.dims,togglePlay:()=>this.setState({spin:!S.spin}),toggleDims:()=>this.setState({dims:!S.dims}),addLabel:S.edit?'Update cart':'Add to cart',toSummary:()=>{const e=document.getElementById('design-end');if(e)e.scrollIntoView({behavior:'smooth'});},
+      lines,cartTotal:$(cartTotal),checkout:go('pos'),addPos:()=>this.add(cur,sel,'pos'),toast:S.toast,
+      vPos:S.view==='pos',vDoc:S.view==='doc',cust:S.cust,err:S.err,
+      sub:$(cartTotal),gst:$(Math.round(cartTotal*.18)),grand:$(cartTotal+Math.round(cartTotal*.18)),
+      setName:e=>this.setState({cust:{...S.cust,name:e.target.value}}),setPhone:e=>this.setState({cust:{...S.cust,phone:e.target.value}}),setAddr:e=>this.setState({cust:{...S.cust,addr:e.target.value}}),
+      genQuote:()=>this.gen('quote'),genBill:()=>this.gen('bill'),backPos:go('pos'),
+      docTitle:S.doc==='quote'?'QUOTATION':'INVOICE',billToLabel:S.doc==='quote'?'QUOTATION FOR':'BILL TO',
+      docNote:S.doc==='quote'?'This quotation is valid for 15 days from the date above. Prices include selected customizations.':'Simulated document for this demo. It is not a registered tax invoice.',docNo:S.docNo,docDate:S.docDate,
+      printDoc:()=>{try{window.print();}catch(_){this.note('Printing is not available here');}},
+      newSale:()=>this.setState({cart:[],cust:{name:'',phone:'',addr:''},doc:'',view:'home',cat:'all'})};
+      }}
+    </script>
+  </body>
+</html>
